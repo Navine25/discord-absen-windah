@@ -1,6 +1,7 @@
 // Require the necessary discord.js classes
 // const Discord = require("discord.js");
 // const { Client } = require('discord.js');
+require("dotenv").config();
 const { Client, Intents } = require("discord.js");
 // const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 const client = new Client({
@@ -11,6 +12,7 @@ const { QuickDB } = require("quick.db");
 client.db = new QuickDB();
 client.request = new(require("rss-parser"))();
 client.config = require("./config.json");
+
 
 // When the client is ready, run this code (only once)
 client.once('ready', () => {
@@ -44,4 +46,4 @@ function handleUpload() {
 }
 
 // Login to Discord with your client's token
-client.login(client.config.token);
+client.login(process.env.TOKEN)
