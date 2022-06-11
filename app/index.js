@@ -2,7 +2,7 @@
 // const Discord = require("discord.js");
 // const { Client } = require('discord.js');
 require("dotenv").config();
-const { Client, Intents } = require("discord.js");
+const { Client, Intents, Util } = require("discord.js");
 // const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 const client = new Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
@@ -35,11 +35,14 @@ function handleUpload() {
             let parsed = client.db.get(`videoData`);
             let channel = client.channels.cache.get(client.config.channel);
             if (!channel) return;
-            let message = client.config.messageTemplate
-                .replace(/{author}/g, parsed.author)
-                .replace(/{title}/g, Discord.Util.escapeMarkdown(parsed.title))
-                .replace(/{url}/g, parsed.link);
-            channel.send(message);
+            if (parsed.title) {
+                console.log("asd", parsed.title);
+                let message = client.config.messageTemplate
+                    .replace(/{author}/g, parsed.author)
+                    .replace(/{title}/g, Util.escapeMarkdown(parsed.title))
+                    .replace(/{url}/g, parsed.link);
+                channel.send(message);
+            }
         }
         // });
     }, client.config.watchInterval);

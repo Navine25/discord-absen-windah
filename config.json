@@ -2,5 +2,5 @@
     "channel": "984074920789155993",
     "messageTemplate": "Hello @everyone, **{author}** just now uploaded a video **{title}**!\n{url}",
     "channel_id": "UCoIiiHof6BJ85PLuLkuxuhw",
-    "watchInterval": 60000
+    "watchInterval": 2000
 }
