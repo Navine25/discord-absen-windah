@@ -27,16 +27,17 @@ function handleUpload() {
             // console.log(client_request)
             // .then(data => {
         const re = await client.db.get(`postedVideos`)
-        console.log(re, 'line 28'); // null
+        console.log(re, "re"); // null
         if (re != null && re.includes(client_request.items[0].link)) return;
         else {
-            client.db.set(`videoData`, client_request.items[0]);
-            client.db.push("postedVideos", client_request.items[0].link);
-            let parsed = client.db.get(`videoData`);
+            await client.db.set(`videoData`, client_request.items[0]);
+            await client.db.push("postedVideos", client_request.items[0].link);
+            let parsed = await client.db.get(`videoData`);
+            console.log("Parsed:", parsed);
             let channel = client.channels.cache.get(client.config.channel);
             if (!channel) return;
-            if (parsed.title) {
-                console.log("asd", parsed.title);
+            if (parsed) {
+                console.log("Release Discord:", parsed.title);
                 let message = client.config.messageTemplate
                     .replace(/{author}/g, parsed.author)
                     .replace(/{title}/g, Util.escapeMarkdown(parsed.title))
