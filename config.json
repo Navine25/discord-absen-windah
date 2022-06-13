@@ -1,6 +1,6 @@
 {
     "channel": "985924132254384178",
-    "messageTemplate": "Hello @Navine, **{author}** just now uploaded a video **{title}**!\n{url}",
+    "messageTemplate": "Hello <@&908727452484907099>, **{author}** just now uploaded a video **{title}**!\n{url}",
     "channel_id": "UCoIiiHof6BJ85PLuLkuxuhw",
     "watchInterval": 60000
 }
