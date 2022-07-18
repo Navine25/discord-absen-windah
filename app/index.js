@@ -156,7 +156,7 @@ function searchNews({ msg, category, interaction }) {
           url: newsGot[index].url,
           color: 5814783,
           author: {
-            name: (index+1) + newsGot[index].source.name,
+            name: (index+1) + ". " + newsGot[index].source.name,
             "icon_url": "https://i.pinimg.com/474x/a4/4d/35/a44d35320a5f87e42dd0c158c25941aa.jpg"
           },
           image: {
