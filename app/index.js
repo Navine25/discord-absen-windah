@@ -156,14 +156,18 @@ function searchNews({ msg, category, interaction }) {
           url: newsGot[index].url,
           color: 5814783,
           author: {
-            name: newsGot[index].source.name,
+            name: (index+1) + newsGot[index].source.name,
+            "icon_url": "https://i.pinimg.com/474x/a4/4d/35/a44d35320a5f87e42dd0c158c25941aa.jpg"
           },
           image: {
             url: newsGot[index].urlToImage,
           },
+          "footer": {
+            "text": "by Hehe Bot"
+          },
+          "timestamp": today,
         };
 
-        let message = `${newsGot[index].title} \n ${newsGot[index].url}`;
         // interaction.reply(message);
         // interaction.channelId(984074920789155993)
         clientChannel.send({ embeds: [embed] });
