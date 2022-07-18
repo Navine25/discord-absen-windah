@@ -160,7 +160,7 @@ function searchNews({ msg, category, interaction }) {
             "icon_url": "https://i.pinimg.com/474x/a4/4d/35/a44d35320a5f87e42dd0c158c25941aa.jpg"
           },
           image: {
-            url: newsGot[index].urlToImage,
+            url: newsGot[index].urlToImage ?? "https://i.pinimg.com/474x/a4/4d/35/a44d35320a5f87e42dd0c158c25941aa.jpg",
           },
           "footer": {
             "text": "by Hehe Bot"
