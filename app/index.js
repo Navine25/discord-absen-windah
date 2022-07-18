@@ -69,7 +69,7 @@ client.once("ready", () => {
   console.log(today);
   // handleUpload();
   // client.user.setActivity("| h!", { type: "LISTENING" });
-  const testGuildId = ["984074920269053982"];
+  const testGuildId = ["984074920269053982", "908632787874091038"];
   testGuildId.map(async (guildId) => {
     await rest.put(Routes.applicationGuildCommands(client.user.id, guildId), {
       body: [command.toJSON()],
@@ -133,7 +133,7 @@ function handleUpload() {
 function searchNews({ msg, category, interaction }) {
   newsapi.v2
     .topHeadlines({
-    //   q: msg,
+      q: msg,
       category: category,
       from: today,
       to: today,
