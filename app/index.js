@@ -44,7 +44,7 @@ const command = new SlashCommandBuilder()
     option
       .setName("query")
       .setDescription("what you want to search")
-      .setRequired(true)
+      .setRequired(false)
   );
 
 // -------------- MANY SUBCOMMAND------------------
@@ -133,7 +133,7 @@ function handleUpload() {
 function searchNews({ msg, category, interaction }) {
   newsapi.v2
     .topHeadlines({
-      q: msg,
+      q: msg ?? "",
       category: category,
       from: today,
       to: today,
