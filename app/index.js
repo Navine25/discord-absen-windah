@@ -142,22 +142,35 @@ function searchNews({ msg, category, interaction }) {
     .then((response) => {
       let channel = client.channels.cache.get(client.config.channel);
       if (!channel) return;
-      if(response.articles.length > 10) newsGot = response.articles.slice(0, 10);
-      else newsGot = response.articles
-      console.log(newsGot)
+      if (response.articles.length > 10)
+        newsGot = response.articles.slice(0, 10);
+      else newsGot = response.articles;
+      console.log(newsGot);
       const clientChannel = client.channels.cache.get(interaction.channelId);
-      for (let index = 0; index < newsGot.length; index++) {   
+      for (let index = 0; index < newsGot.length; index++) {
         // console.log(newsGot[index].title)
         // console.log(newsGot[index].url)
-        let message = `${newsGot[index].title} \n ${newsGot[index].url}`
+        let embed = {
+          title: newsGot[index].title,
+          description: newsGot[index].description,
+          url: newsGot[index].url,
+          color: 5814783,
+          author: {
+            name: newsGot[index].source.name,
+          },
+          image: {
+            url: newsGot[index].urlToImage,
+          },
+        };
+
+        let message = `${newsGot[index].title} \n ${newsGot[index].url}`;
         // interaction.reply(message);
         // interaction.channelId(984074920789155993)
-        clientChannel.send(message)
+        clientChannel.send({ embeds: [embed] });
       }
-      interaction.reply("Top 10 news in category")
+      interaction.reply("Top 10 news in category");
     })
     .catch((err) => console.log(err));
-
 }
 
 // Login to Discord with your client's token
