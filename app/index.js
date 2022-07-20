@@ -64,17 +64,16 @@ const command = new SlashCommandBuilder()
 //   );
 
 // When the client is ready, run this code (only once)
-client.once("ready", () => {
+client.on("ready", async () => {
   console.log("Ready!");
   console.log(today);
-  // handleUpload();
-  // client.user.setActivity("| h!", { type: "LISTENING" });
   const testGuildId = ["984074920269053982", "908632787874091038"];
   testGuildId.map(async (guildId) => {
     await rest.put(Routes.applicationGuildCommands(client.user.id, guildId), {
       body: [command.toJSON()],
     });
   });
+  await handleUpload();
 });
 
 client.on("messageCreate", async (msg) => {
