@@ -80,8 +80,6 @@ client.on("messageCreate", async (msg) => {
   let search = "";
   let category = "";
   if (msg.content.startsWith("h!news")) search = msg.content.split(" ");
-  //   category = search[1];
-  //   search = search.append(2 - 1);
   console.log(search.length);
   search = search[1];
   searchNews({ msg: search });
@@ -104,8 +102,6 @@ function handleUpload() {
     const client_request = await client.request.parseURL(
       `https://www.youtube.com/feeds/videos.xml?channel_id=${client.config.channel_id}`
     );
-    // console.log(client_request)
-    // .then(data => {
     const re = await client.db.get(`postedVideos`);
     console.log(re, "re"); // null
     if (re != null && re.includes(client_request.items[0].link)) return;
@@ -125,7 +121,6 @@ function handleUpload() {
         channel.send(message);
       }
     }
-    // });
   }, client.config.watchInterval);
 }
 
@@ -147,8 +142,6 @@ function searchNews({ msg, category, interaction }) {
       console.log(newsGot);
       const clientChannel = client.channels.cache.get(interaction.channelId);
       for (let index = 0; index < newsGot.length; index++) {
-        // console.log(newsGot[index].title)
-        // console.log(newsGot[index].url)
         let embed = {
           title: newsGot[index].title,
           description: newsGot[index].description,
@@ -166,9 +159,6 @@ function searchNews({ msg, category, interaction }) {
           },
           "timestamp": today,
         };
-
-        // interaction.reply(message);
-        // interaction.channelId(984074920789155993)
         clientChannel.send({ embeds: [embed] });
       }
       interaction.reply("Top 10 news in category");
