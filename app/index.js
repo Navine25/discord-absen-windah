@@ -99,26 +99,28 @@ client.on("interactionCreate", (interaction) => {
 function handleUpload() {
   if (client.db.get(`postedVideos`) === null) client.db.set(`postedVideos`, []);
   setInterval(async () => {
-    const client_request = await client.request.parseURL(
-      `https://www.youtube.com/feeds/videos.xml?channel_id=${client.config.channel_id}`
-    );
-    const re = await client.db.get(`postedVideos`);
-    console.log(re, "re"); // null
-    if (re != null && re.includes(client_request.items[0].link)) return;
-    else {
-      await client.db.set(`videoData`, client_request.items[0]);
-      await client.db.push("postedVideos", client_request.items[0].link);
-      let parsed = await client.db.get(`videoData`);
-      console.log("Parsed:", parsed);
-      let channel = client.channels.cache.get(client.config.channel);
-      if (!channel) return;
-      if (parsed) {
-        console.log("Release Discord:", parsed.title);
-        let message = client.config.messageTemplate
-          .replace(/{author}/g, parsed.author)
-          .replace(/{title}/g, Util.escapeMarkdown(parsed.title))
-          .replace(/{url}/g, parsed.link);
-        channel.send(message);
+    for (let index = 0; index < client.config.channel_id.length; index++) {
+      const client_request = await client.request.parseURL(
+        `https://www.youtube.com/feeds/videos.xml?channel_id=${client.config.channel_id[index]}`
+      );
+      const re = await client.db.get(`postedVideos`);
+      console.log(re, "re"); // null
+      if (re != null && re.includes(client_request.items[0].link)) return;
+      else {
+        await client.db.set(`videoData`, client_request.items[0]);
+        await client.db.push("postedVideos", client_request.items[0].link);
+        let parsed = await client.db.get(`videoData`);
+        console.log("Parsed:", parsed);
+        let channel = client.channels.cache.get(client.config.channel);
+        if (!channel) return;
+        if (parsed) {
+          console.log("Release Discord:", parsed.title);
+          let message = client.config.messageTemplate
+            .replace(/{author}/g, parsed.author)
+            .replace(/{title}/g, Util.escapeMarkdown(parsed.title))
+            .replace(/{url}/g, parsed.link);
+          channel.send(message);
+        }
       }
     }
   }, client.config.watchInterval);

@@ -3,5 +3,5 @@
     "newsMessage" : "**{title}** \n **{url}**",
     "messageTemplate": "Hello <@&988286950471528448>, **{author}** just uploaded a video **{title}**!\n{url}! Go check it out",
     "channel_id": ["UCoIiiHof6BJ85PLuLkuxuhw", "UCjLEmnpCNeisMxy134KPwWw"],
-    "watchInterval": 60000
+    "watchInterval": 2000
 }
