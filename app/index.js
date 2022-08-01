@@ -76,14 +76,14 @@ client.on("ready", async () => {
   await handleUpload();
 });
 
-client.on("messageCreate", async (msg) => {
-  let search = "";
-  let category = "";
-  if (msg.content.startsWith("h!news")) search = msg.content.split(" ");
-  console.log(search.length);
-  search = search[1];
-  searchNews({ msg: search });
-});
+// client.on("messageCreate", async (msg) => {
+//   let search = "";
+//   let category = "";
+//   if (msg.content.startsWith("h!news")) search = msg.content.split(" ");
+//   console.log(search.length);
+//   search = search[1];
+//   searchNews({ msg: search });
+// });
 
 client.on("interactionCreate", (interaction) => {
   if (!interaction.isCommand()) return;
