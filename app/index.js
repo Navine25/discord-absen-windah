@@ -20,32 +20,33 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 
 const rest = new REST({ version: "9" }).setToken(process.env.TOKEN);
 
-const command = new SlashCommandBuilder()
-  .setName("news")
-  .setDescription("Find news in Indonesian")
-  .addStringOption((option) =>
-    option
-      .setName("category")
-      .setDescription(
-        "business | entertainment | general | health | science | sports | technology"
-      )
-      .setRequired(true)
-      .addChoices(
-        { name: "business", value: "business" },
-        { name: "general", value: "general" },
-        { name: "health", value: "health" },
-        { name: "science", value: "science" },
-        { name: "entertaintment", value: "entertaintment" },
-        { name: "sports", value: "sports" },
-        { name: "technology", value: "technology" }
-      )
-  )
-  .addStringOption((option) =>
-    option
-      .setName("query")
-      .setDescription("what you want to search")
-      .setRequired(false)
-  );
+// Slash Command Initiate
+// const command = new SlashCommandBuilder()
+//   .setName("news")
+//   .setDescription("Find news in Indonesian")
+//   .addStringOption((option) =>
+//     option
+//       .setName("category")
+//       .setDescription(
+//         "business | entertainment | general | health | science | sports | technology"
+//       )
+//       .setRequired(true)
+//       .addChoices(
+//         { name: "business", value: "business" },
+//         { name: "general", value: "general" },
+//         { name: "health", value: "health" },
+//         { name: "science", value: "science" },
+//         { name: "entertaintment", value: "entertaintment" },
+//         { name: "sports", value: "sports" },
+//         { name: "technology", value: "technology" }
+//       )
+//   )
+//   .addStringOption((option) =>
+//     option
+//       .setName("query")
+//       .setDescription("what you want to search")
+//       .setRequired(false)
+//   );
 
 // -------------- MANY SUBCOMMAND------------------
 // const command = new SlashCommandBuilder()
@@ -85,16 +86,17 @@ client.on("ready", async () => {
 //   searchNews({ msg: search });
 // });
 
-client.on("interactionCreate", (interaction) => {
-  if (!interaction.isCommand()) return;
+// Slash Command
+// client.on("interactionCreate", (interaction) => {
+//   if (!interaction.isCommand()) return;
 
-  if (interaction.commandName === "news")
-    searchNews({
-      msg: interaction.options.getString("query"),
-      category: interaction.options.getString("category"),
-      interaction: interaction,
-    });
-});
+//   if (interaction.commandName === "news")
+//     searchNews({
+//       msg: interaction.options.getString("query"),
+//       category: interaction.options.getString("category"),
+//       interaction: interaction,
+//     });
+// });
 
 function handleUpload() {
   if (client.db.get(`postedVideos`) === null) client.db.set(`postedVideos`, []);
@@ -126,47 +128,48 @@ function handleUpload() {
   }, client.config.watchInterval);
 }
 
-function searchNews({ msg, category, interaction }) {
-  newsapi.v2
-    .topHeadlines({
-      q: msg ?? "",
-      category: category,
-      from: today,
-      to: today,
-      country: "id",
-    })
-    .then((response) => {
-      let channel = client.channels.cache.get(client.config.channel);
-      if (!channel) return;
-      if (response.articles.length > 10)
-        newsGot = response.articles.slice(0, 10);
-      else newsGot = response.articles;
-      console.log(newsGot);
-      const clientChannel = client.channels.cache.get(interaction.channelId);
-      for (let index = 0; index < newsGot.length; index++) {
-        let embed = {
-          title: newsGot[index].title,
-          description: newsGot[index].description,
-          url: newsGot[index].url,
-          color: 5814783,
-          author: {
-            name: (index+1) + ". " + newsGot[index].source.name,
-            "icon_url": "https://i.pinimg.com/474x/a4/4d/35/a44d35320a5f87e42dd0c158c25941aa.jpg"
-          },
-          image: {
-            url: newsGot[index].urlToImage ?? "https://i.pinimg.com/474x/a4/4d/35/a44d35320a5f87e42dd0c158c25941aa.jpg",
-          },
-          "footer": {
-            "text": "by Hehe Bot"
-          },
-          "timestamp": today,
-        };
-        clientChannel.send({ embeds: [embed] });
-      }
-      interaction.reply("Top 10 news in category");
-    })
-    .catch((err) => console.log(err));
-}
+// NewsAPI
+// function searchNews({ msg, category, interaction }) {
+//   newsapi.v2
+//     .topHeadlines({
+//       q: msg ?? "",
+//       category: category,
+//       from: today,
+//       to: today,
+//       country: "id",
+//     })
+//     .then((response) => {
+//       let channel = client.channels.cache.get(client.config.channel);
+//       if (!channel) return;
+//       if (response.articles.length > 10)
+//         newsGot = response.articles.slice(0, 10);
+//       else newsGot = response.articles;
+//       console.log(newsGot);
+//       const clientChannel = client.channels.cache.get(interaction.channelId);
+//       for (let index = 0; index < newsGot.length; index++) {
+//         let embed = {
+//           title: newsGot[index].title,
+//           description: newsGot[index].description,
+//           url: newsGot[index].url,
+//           color: 5814783,
+//           author: {
+//             name: (index+1) + ". " + newsGot[index].source.name,
+//             "icon_url": "https://i.pinimg.com/474x/a4/4d/35/a44d35320a5f87e42dd0c158c25941aa.jpg"
+//           },
+//           image: {
+//             url: newsGot[index].urlToImage ?? "https://i.pinimg.com/474x/a4/4d/35/a44d35320a5f87e42dd0c158c25941aa.jpg",
+//           },
+//           "footer": {
+//             "text": "by Hehe Bot"
+//           },
+//           "timestamp": today,
+//         };
+//         clientChannel.send({ embeds: [embed] });
+//       }
+//       interaction.reply("Top 10 news in category");
+//     })
+//     .catch((err) => console.log(err));
+// }
 
 // Login to Discord with your client's token
 client.login(process.env.TOKEN);
